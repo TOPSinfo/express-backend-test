@@ -1,12 +1,13 @@
 const { Sequelize } = require('sequelize');
 
+// Create a new Sequelize instance for database connection
 const sequelize = new Sequelize({
-  database: 'pfmegrnargs',
-  username: 'reader',
-  password: 'NWDMCE5xdipIjRrp',
-  host: 'hh-pgsql-public.ebi.ac.uk',
-  port: 5432,
-  dialect: 'postgres',
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER_NAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  dialect: process.env.DB_DIALECT,
 });
 
 module.exports = sequelize;

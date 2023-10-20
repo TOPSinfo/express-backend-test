@@ -3,8 +3,11 @@ const Locus = require('../models/Locus');
 const LocusMember = require('../models/LocusMember');
 const { allowedRegionIds } = require('../config/details');
 
+// Define a function for retrieving locus data
 const getLocus = async (req, res) => {
   try {
+    
+    // Parse and initialize query parameters
     const page = parseInt(req.query.page, 10) || 1;
     const pageSize = parseInt(req.query.pageSize, 10) || 1000;
     const id = parseInt(req.query.id, 10);
@@ -15,6 +18,7 @@ const getLocus = async (req, res) => {
     const sortBy = req.query.sortBy;
     const offset = (page - 1) * pageSize;
 
+    // Define attributes to retrieve for Locus and LocusMember models
     let locusAttributes = [
       'id',
       'assemblyId',
@@ -37,6 +41,7 @@ const getLocus = async (req, res) => {
 
     let whereCondition = {};
 
+    // Define attributes to retrieve for Locus and LocusMember models
     if (!id) {
       locusAttributes = locusAttributes.filter((locusAttribute) => locusAttribute !== 'id');
     }
@@ -59,6 +64,7 @@ const getLocus = async (req, res) => {
       };
     }
 
+    // Define the list of models to include in the query
     let includeModels = [{
       model: LocusMember,
       attributes: locusMemberAttributes,

@@ -1,11 +1,12 @@
 const express = require('express');
+require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/database');
 const swaggerSpec = require('./swagger');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware to parse JSON and handle URL-encoded forms
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,12 +16,7 @@ app.use(bodyParser.json());
 app.use('/locus', require('./routes/locus.route'));
 app.use('/auth', require('./routes/authentication.route'));
 
-var options = {
-  swaggerOptions: {
-    authAction :{ JWT: {name: "JWT", schema: {type: "apiKey", in: "header", name: "Authorization", description: ""}, value: "Bearer <JWT>"} }
-  }
-};
-
+// route to access swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Handle incorrect routes
